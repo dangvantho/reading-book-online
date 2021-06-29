@@ -1,12 +1,16 @@
-import React from 'react';
-import './App.css';
-import Test from './components/TestCrawlData'
+import React from "react";
+import Router from "./Router";
+import Test from './components/TestSpeechText'
+import Header from './layouts/Header/Header';
+import {BrowserRouter , Route, Switch, Link} from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
-      <Test/>
-    </div>
+    <BrowserRouter>
+      <Header/>
+      <Router/>
+      {/* <Test/> */}
+    </BrowserRouter>
   );
 }
 

@@ -7,6 +7,7 @@ import { makeStyles, Box } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import logo from '../../assets/logo.png'
 import DropMenu from "./DropMenu";
+import Wrapper from '../Wrapper'
 
 Header.propTypes = {};
 const useStyle = makeStyles((theme) => ({
@@ -61,9 +62,8 @@ function Header(props) {
     dispatch(fetchCategory());
   }, []);
   return (
-    <Box className={classes.root}>
-      <Box className={classes.container}>
-          <Box display='flex' justifyContent='space-between'>
+    <Wrapper bgcolor='#14425d'>
+      <Box display='flex' justifyContent='space-between'>
               <Link to='/' className={classes.logo} >
               </Link>
               <Box 
@@ -84,8 +84,7 @@ function Header(props) {
               </Box>
           </Box>
         
-      </Box>
-    </Box>
+    </Wrapper>
   );
 }
 const mapSateToProps = (state) => ({

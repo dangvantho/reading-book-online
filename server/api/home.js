@@ -44,6 +44,35 @@ module.exports= {
         })
         return value
     },
-    async selectBook(){},
+    async newBook(id){
+        let $= await fetchHtml(`https://truyenfull.vn/ajax.php?type=new_select&id=${id}`)
+        let value=[] 
+        $('.row').map((i,el)=>{
+            let x= $(el)
+            let link= x.find('h3 a')
+            let genre=[] 
+            x.find('a[itemprop="genre"]').map((i,el)=>{
+                let x= $(el)
+                genre.push({
+                    url: x.attr('href'),
+                    title: x.text()
+                })
+            })
+            let chapter= x.find('.text-info a')
+            let updateAt= x.find('.col-time')
+            console.log(link.attr('href'), link.text(),genre,  chapter.text(), updateAt.text())
+            value.push({
+                url: link.attr('href'),
+                title: link.text(),
+                genre,
+                chapter: {
+                    url: chapter.attr('href'),
+                    number: chapter.text()
+                },
+                updateAt: updateAt.text()
+            })
+        })
+        return value
+    },
 }
 

@@ -14,7 +14,6 @@ const useStyle = makeStyles((theme) => ({
       display:'flex',
       padding: '0 18px',
       alignItems:'center',
-      position:'relative',
       height: 44,
       '& span':{
           padding:'0 4px',
@@ -24,14 +23,17 @@ const useStyle = makeStyles((theme) => ({
           background:'#2f566d'
       }
   },
+  collapse:{
+    position:'absolute',
+    top: 44,
+    left: 220,
+    zIndex: 10,
+  },
   dropMenu:{
       width:480,
       display:'flex',
       justifyContent:'space-between',
       flexWrap:'wrap',
-      position:'absolute',
-      top: 44,
-      left:0,
       padding:'12px',
       background:'#2f566d'
   },
@@ -62,8 +64,8 @@ function DropMenu(props) {
         <ListIcon className={classes.dropIcon} />
         <span>Thể loại</span>
         <ArrowDropDownIcon className={classes.dropIcon} />
-        <Collapse in={dropDown} timeout={{appear: 1000, exit:0}} >
-            <Paper elevation={4} className={classes.dropMenu}>
+        <Collapse in={dropDown} timeout={{appear: 1000, exit:0}} className={classes.collapse}  >
+            <Paper elevation={4} className={classes.dropMenu} >
                {category.map(value=>(
                    <Link 
                       to={"/the-loai/" + value.href} 

@@ -28,6 +28,9 @@ const useStyle = makeStyles((theme) => ({
     top: 44,
     left: 220,
     zIndex: 10,
+    [theme.breakpoints.down('sm')]:{
+      left: 20
+    }
   },
   dropMenu:{
       width:480,

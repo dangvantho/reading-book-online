@@ -1,6 +1,7 @@
 const express= require('express')
 const cors= require('cors')
 const app= express()
+const port = process.env.PORT || 3001
 
 const homeRoute= require('./routes/home.route')
 const bookRoute= require('./routes/book.route')
@@ -12,4 +13,4 @@ app.use(cors())
 app.use('/api/home', homeRoute)
 app.use('/api/book', bookRoute)
 
-app.listen(3001, ()=>console.log('App is running on port 3001'))
+app.listen(port, ()=>console.log(`App is running on port ${port}`))

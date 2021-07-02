@@ -3,6 +3,7 @@ import React from 'react';
 import Wrapper from '../../layouts/Wrapper';
 import HotBook from './HotBook';
 import NewBox from './NewBox';
+import bg from "../../assets/bg.jpg";
 
 const useStyle= makeStyles(theme=>({
     root:{},
@@ -10,7 +11,7 @@ const useStyle= makeStyles(theme=>({
 
 function Home(props) {
     return (
-        <Wrapper bgcolor='#f4f4f4'>
+        <Wrapper body={true} bgcolor={`url(${bg}) top center repeat-x #F4F4F4`}>
             <HotBook/>
             <NewBox/>
         </Wrapper>

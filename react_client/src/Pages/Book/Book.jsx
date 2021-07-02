@@ -1,45 +1,128 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux'
-import {fetchInforOfBook, fetchPage} from '../../app/reducers/bookReducer'
-import {Pagination} from '@material-ui/lab'
-Book.propTypes = {
-    
-};
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { Link, useParams } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
+import { fetchInforOfBook } from "../../app/reducers/bookReducer";
+import { Grid, makeStyles, Box, Hidden } from "@material-ui/core";
+import Wrapper from "../../layouts/Wrapper";
+import Reading from './Reading'
+import bg from "../../assets/bg.jpg";
+
+const useStyle = makeStyles((theme) => ({
+  root: {},
+  img:{
+      objectFit:'cover',
+      objectPosition:'center',
+      width:'100%',
+      maxWidth: 300,
+      maxHeight: 400
+  },
+  h3:{
+      fontSize: 14,
+      fontWeight: 500,
+      paddingRight: 6,
+  },
+  infoLink:{
+      fontSize: 14,
+      color: 'blue',
+      paddingRight: 4,
+      textDecoration:'none',
+      '&:hover':{
+          textDecoration: 'underline',
+      }
+  },
+  source:{
+      fontSize: 14,
+  },
+  status:{
+      fontSize: 14,
+      // color: 'blue'
+  },
+  desc:{
+      textIndent: 18,
+      lineHeight: 1.5,
+      fontSize: 16,
+      paddingBottom: 20
+  }
+}));
 
 function Book(props) {
-    const { title, maxPage, content, links}= props.book
-    const {name}= useParams()
-    const dispatch= useDispatch()
-    function handleChangePage(e, page){
-        dispatch(fetchPage({
-            url: name,
-            page
-        }))
-        window.scrollTo({
-            top:0,
-            behavior:'smooth'
-        })
-    }
-    useEffect(()=>{
-        dispatch(fetchInforOfBook(name))
-    }, [name])
-    return (
-        <div>
-            <div>{title}</div>
-            {links.map(value=>(
-                <p key={value.title}>
-                    {value.title}
-                </p>
-            ))}
-            <Pagination count={maxPage} onChange={handleChangePage} />
-        </div>
-    );
+  const classes = useStyle();
+  const { maxPage, links, desc, info, content } = props.book;
+  const { name } = useParams();
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(fetchInforOfBook(name));
+  }, [name]);
+  return (
+    <Wrapper body={true} bgcolor={`url(${bg}) top center repeat-x #F4F4F4`}>
+      <Box ml="8px" mt={4} overflow="hidden" minHeight="450px" pb='40px'>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={8}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={4}>
+                <Box display="flex" justifyContent='center' width="100%">
+                  <img
+                    className={classes.img}
+                    src={info.img}
+                    alt={`Ảnh ${name}`}
+                  />
+                </Box>
+                <Box >
+                    <Box display='flex' alignItems='center' mt='12px'>
+                        <h3 className={classes.h3}>Tác giả</h3>
+                        <Link className={classes.infoLink} to={`/author/${info.author.url }`}>
+                            {info.author.title}
+                        </Link>
+                    </Box>
+                    <Box display='flex' alignItems='center' mt='12px' flexWrap='wrap'>
+                        <h3 className={classes.h3}>Thể loại</h3>
+                        {info.genre.map(value=>(
+                            <Link className={classes.infoLink} to={`/the-loai/${value.url}`} key={value.title}>
+                                {value.title} ,
+                            </Link>
+                        ))}
+                    </Box>
+                    <Box display='flex' alignItems='center' mt='12px'>
+                        <h3 className={classes.h3}>Nguồn</h3>
+                        <span className={classes.source}>
+                            {info.source}
+                        </span>
+                    </Box>
+                    <Box display='flex' alignItems='center' mt='12px'>
+                        <h3 className={classes.h3}>Trạng thái</h3>
+                        <span className={classes.status} style={{color: info.status ? 'blue': ''}}>
+                            {info.status || 'Full'}
+                        </span>
+                    </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={8}>
+                <div className={classes.desc}>
+                    {desc}
+                </div>
+                <Reading 
+                links={links} 
+                maxPage={maxPage} 
+                name={name}
+                content={content}
+                />
+                
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Hidden smDown>
+          <Grid item md={4}></Grid>
+        </Hidden>
+      </Box>
+    </Wrapper>
+  );
 }
 
-const mapStateToProps= state=>({
-    book: state.book
-})
+const mapStateToProps = (state) => ({
+  book: state.book,
+});
 
-export default connect(mapStateToProps, null)(Book)
+export default connect(mapStateToProps, null)(Book);

@@ -22,12 +22,17 @@ const useStyle = makeStyles({
 });
 
 function Wrapper(props) {
-  const { bgcolor, children } = props;
+  const { bgcolor, children, body } = props;
   const classes = useStyle();
   return (
-    <Box bgcolor={bgcolor} className={classes.root}>
+    <Box style={{ background: bgcolor }} className={classes.root}>
       <Box className={classes.container}>
-          {children}
+        {body && (
+          <Box ml='8px'  mt={3} mb={2} >
+            <Box bgcolor="#fff" width="100%" height="30px"/>
+          </Box>
+        )}
+        {children}
       </Box>
     </Box>
   );

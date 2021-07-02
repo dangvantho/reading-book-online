@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const baseURL='https://reading-book-truyen-full.herokuapp.com/api'
+//'http://localhost:3001/api'
 const instance = axios.create({
-  baseURL: "http://localhost:3001/api",
-  timeout: 3000,
+  baseURL,
+  timeout: 5000,
   headers: {
     "content-type": "application/json",
   },

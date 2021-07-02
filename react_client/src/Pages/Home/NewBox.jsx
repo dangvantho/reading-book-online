@@ -36,7 +36,8 @@ const useStyle = makeStyles((theme) => ({
       overflow:'hidden',
       textOverflow:'ellipsis',
       whiteSpace:'nowrap',
-      width: '100%'
+      width: '100%',
+      display:'block'
   },
   genre:{
       borderLeft:'1px dashed #ccc',
@@ -87,8 +88,13 @@ function NewBox(props) {
     dispatch(fetchNewBooks(value));
   }
   function getUrl(link) {
-    const split = link.split("/");
+    try {
+      const split = link.split("/");
     return split[split.length - 2];
+    } catch (error) {
+      console.log(link)
+      return '/'
+    }
   }
   useEffect(() => {
     if (books.length === 0) {
@@ -96,7 +102,7 @@ function NewBox(props) {
     }
   }, []);
   return (
-    <Box ml="8px" overflow='hidden'>
+    <Box ml="8px" overflow='hidden' pb='40px'>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -117,21 +123,23 @@ function NewBox(props) {
       <Grid container spacing={2}>
         <Grid item xs={12} md={9} style={{ borderTop: "1px dashed #ccc" }}>
           {books.map((value) => (
-            <Grid container spacing={0} className={classes.row}>
+            <Grid key={value.title} container spacing={0} className={classes.row}>
               <Grid item xs={9} sm={5} className={classes.titleBook}>
                 <Link 
                   className={classes.link}
+                  title={value.title}
                   to={`/doc-truyen/${getUrl(value.url)}`}>
                   {value.title}
                 </Link>
               </Grid>
               <Hidden xsDown>
-                <Grid item xs={0} sm={5} md={3} className={classes.genre}>
+                <Grid item xs={0} sm={5} md={3} className={classes.genre} style={{display:'flex'}}>
                   {value.genre.map((genre, index) => (
                     <Link
-                    className={classes.link}
+                      className={classes.link}
                       key={genre.title}
                       to={`/the-loai/${getUrl(genre.url)}`}
+                      style={{width: 'auto'}}
                     >
                       {value.genre.length === index
                         ? genre.title

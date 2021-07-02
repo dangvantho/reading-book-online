@@ -2,11 +2,12 @@ const novel= require('../api/novel')
 class bookController{
     async index(req,res){
         const {link}= req.params
-        const data=await Promise.all([novel.getTitle(link),novel.getMaxPage(link),novel.getPageLink(link,1)])
+        const data=await Promise.all([novel.getDesc(link),novel.getMaxPage(link),novel.getPageLink(link,1)])
         const [title, maxPage, links]= data
+        const { desc, info} = title
         res.json({
             data: {
-                title, maxPage, links
+                desc, info, maxPage, links
             }
         })
     }

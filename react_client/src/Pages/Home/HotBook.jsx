@@ -60,8 +60,13 @@ function HotBook(props) {
     dispatch(fetchHotBooks(id));
   }
   function getUrl(link) {
-    const split = link.split("/");
+    try {
+      const split = link.split("/");
     return split[split.length - 2];
+    } catch (error) {
+      console.log(link)
+      throw new Error(error)
+    }
   }
   useEffect(() => {
     if (books.length === 0) {

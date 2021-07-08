@@ -1,10 +1,12 @@
 import axios from "axios";
 
-const baseURL='https://reading-book-truyen-full.herokuapp.com/api'
+const baseURL='http://localhost:3001/api'
 //'http://localhost:3001/api'
+//http://192.168.1.5:3001/api
+//https://reading-book-truyen-full.herokuapp.com/api
 const instance = axios.create({
   baseURL,
-  timeout: 5000,
+  // timeout: 5000,
   headers: {
     "content-type": "application/json",
   },

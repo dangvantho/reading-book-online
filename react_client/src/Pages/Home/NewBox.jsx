@@ -11,70 +11,70 @@ const useStyle = makeStyles((theme) => ({
     borderBottom: "1px dashed #ccc",
     padding: "8px 0",
   },
-  titleNew:{
-      fontSize: 20,
-      fontWeight: 400,
-      textTransform:'uppercase',
-      margin: '8px 0',
-      paddingBottom: 6,
-      borderBottom: '1px solid #4e4e4e'
+  titleNew: {
+    fontSize: 20,
+    fontWeight: 400,
+    textTransform: "uppercase",
+    margin: "8px 0",
+    paddingBottom: 6,
+    borderBottom: "1px solid #4e4e4e",
   },
-  select:{
-      height: 32,
-      outline:' none',
-      fontSize: 16,
-      textTransform:'uppercase',
-      "&::-webkit-scrollbar":{
-          display:'none'
-      },
+  select: {
+    height: 32,
+    outline: " none",
+    fontSize: 16,
+    textTransform: "uppercase",
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
   },
-  link:{
-      textDecoration:'none',
-      color:'#4E4E4E',
-      fontWeight:500,
-      paddingLeft: 8,
-      overflow:'hidden',
-      textOverflow:'ellipsis',
-      whiteSpace:'nowrap',
-      width: '100%',
-      display:'block'
+  link: {
+    textDecoration: "none",
+    color: "#4E4E4E",
+    fontWeight: 500,
+    paddingLeft: 8,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    width: "100%",
+    display: "block",
   },
-  genre:{
-      borderLeft:'1px dashed #ccc',
-      borderRight:'1px dashed #ccc',
-      paddingLeft: 8,
+  genre: {
+    borderLeft: "1px dashed #ccc",
+    borderRight: "1px dashed #ccc",
+    paddingLeft: 8,
   },
-  navbar:{
-      background:'#ecf0f1',
-      border:'1px solid #D9E1E4',
-      padding:'10px 14px',
+  navbar: {
+    background: "#ecf0f1",
+    border: "1px solid #D9E1E4",
+    padding: "10px 14px",
     //   margin:'10px 0',
   },
-  title:{
-      borderBottom:'1px solid #ccc',
-      marginBottom: 12,
-      paddingBottom: 8,
-      '&:before':{
-          content:"'Thể loại truyện'",
-          fontSize: 20,
-          fontWeight: 500,
-      paddingBottom: 8,
-      textTransform:'uppercase',
-          borderBottom:'1px solid #4E4E4E',
-      },  
-  },
-  navLink:{
-      paddingLeft: 12,
-      textDecoration:'none',
-      color:'#4E4E4E',
+  title: {
+    borderBottom: "1px solid #ccc",
+    marginBottom: 12,
+    paddingBottom: 8,
+    "&:before": {
+      content: "'Thể loại truyện'",
+      fontSize: 20,
       fontWeight: 500,
-      paddingBottom: 12,
-      display:'block',
-      transition: '0.3s',
-      "&:hover":{
-          cursor:'pointer',
-          textDecoration:'underline',
-      },
+      paddingBottom: 8,
+      textTransform: "uppercase",
+      borderBottom: "1px solid #4E4E4E",
+    },
+  },
+  navLink: {
+    paddingLeft: 12,
+    textDecoration: "none",
+    color: "#4E4E4E",
+    fontWeight: 500,
+    paddingBottom: 12,
+    display: "block",
+    transition: "0.3s",
+    "&:hover": {
+      cursor: "pointer",
+      textDecoration: "underline",
+    },
   },
 }));
 
@@ -90,10 +90,10 @@ function NewBox(props) {
   function getUrl(link) {
     try {
       const split = link.split("/");
-    return split[split.length - 2];
+      return split[split.length - 2];
     } catch (error) {
-      console.log(link)
-      return '/'
+      console.log(link);
+      return "/";
     }
   }
   useEffect(() => {
@@ -102,7 +102,7 @@ function NewBox(props) {
     }
   }, []);
   return (
-    <Box ml="8px" overflow='hidden' pb='40px'>
+    <Box ml="8px" overflow="hidden" pb="40px">
       <Box
         display="flex"
         justifyContent="space-between"
@@ -123,23 +123,36 @@ function NewBox(props) {
       <Grid container spacing={2}>
         <Grid item xs={12} md={9} style={{ borderTop: "1px dashed #ccc" }}>
           {books.map((value) => (
-            <Grid key={value.title} container spacing={0} className={classes.row}>
+            <Grid
+              key={value.title}
+              container
+              spacing={0}
+              className={classes.row}
+            >
               <Grid item xs={9} sm={5} className={classes.titleBook}>
-                <Link 
+                <Link
                   className={classes.link}
                   title={value.title}
-                  to={`/doc-truyen/${getUrl(value.url)}`}>
+                  to={`/doc-truyen/${getUrl(value.url)}`}
+                >
                   {value.title}
                 </Link>
               </Grid>
               <Hidden xsDown>
-                <Grid item xs={0} sm={5} md={3} className={classes.genre} style={{display:'flex'}}>
+                <Grid
+                  item
+                  xs={0}
+                  sm={5}
+                  md={3}
+                  className={classes.genre}
+                  style={{ display: "flex" }}
+                >
                   {value.genre.map((genre, index) => (
                     <Link
                       className={classes.link}
                       key={genre.title}
                       to={`/the-loai/${getUrl(genre.url)}`}
-                      style={{width: 'auto'}}
+                      style={{ width: "auto" }}
                     >
                       {value.genre.length === index
                         ? genre.title
@@ -159,7 +172,12 @@ function NewBox(props) {
                 </Link>
               </Grid>
               <Hidden smDown>
-                <Grid item xs={0} md={2} style={{borderLeft:'1px dashed #ccc'}}>
+                <Grid
+                  item
+                  xs={0}
+                  md={2}
+                  style={{ borderLeft: "1px dashed #ccc" }}
+                >
                   <Box textAlign="center">{value.updateAt}</Box>
                 </Grid>
               </Hidden>
@@ -169,20 +187,19 @@ function NewBox(props) {
         <Hidden smDown>
           <Grid item xs={0} md={3}>
             <Box className={classes.navbar}>
-            <div className={classes.title}>
-            </div>
-            <Grid container>
-                {categories.map(value=>(
-                    <Grid item xs={6}>
-                        <Link 
-                          to={`/the-loai/${getUrl(value.url)}`}
-                          className={classes.navLink}
-                        >
-                            {value.title}
-                        </Link>
-                    </Grid>
+              <div className={classes.title}></div>
+              <Grid container>
+                {categories.map((value) => (
+                  <Grid item xs={6}>
+                    <Link
+                      to={`/the-loai/${getUrl(value.url)}`}
+                      className={classes.navLink}
+                    >
+                      {value.title}
+                    </Link>
+                  </Grid>
                 ))}
-            </Grid>
+              </Grid>
             </Box>
           </Grid>
         </Hidden>

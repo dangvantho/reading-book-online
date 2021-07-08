@@ -81,7 +81,7 @@ function HotBook(props) {
         <select value={id} onChange={handleSelect} className={classes.select}>
           <option value="all">Tất cả</option>
           {categories.map((value, index) => (
-            <option value={index + 1} key={value.title}>
+            <option value={value.index} key={value.title}>
               {value.title}
             </option>
           ))}

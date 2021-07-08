@@ -10,7 +10,7 @@ const useStyle= makeStyles(theme=>({
         justifyContent:'center'
     },
     load:{
-        width: 10,
+        width: 6,
         height: 20,
         marginRight: 4,
         '&:nth-child(1)':{

@@ -110,6 +110,12 @@ function Reading(props) {
   const { links, maxPage, name, content } = props;
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
+  const audio = useRef();
+  const [src, setSrc] = useState([]);
+  const [playing, setPlaying] = useState(false);
+  const [rate, setRate] = useState(1);
+  const [chapter, setChapter] = useState(0);
+  const [loading, setLoading] = useState(false);
   function handleChangePage(e, page) {
     setLoading(true)
     console.log('page',page, loading)
@@ -126,12 +132,6 @@ function Reading(props) {
       behavior: "smooth",
     });
   }
-  const audio = useRef();
-  const [src, setSrc] = useState([]);
-  const [playing, setPlaying] = useState(false);
-  const [rate, setRate] = useState(1);
-  const [chapter, setChapter] = useState(0);
-  const [loading, setLoading] = useState(false);
   function handleNexTChapter() {
     if (chapter + 1 >= links.length) {
       if (page === maxPage) return;
@@ -153,17 +153,14 @@ function Reading(props) {
     const link = links.find((value, index) => index == chapter);
     return link ? link.title : "";
   }
-  function handlePlaying() {
-    // dispatch(fetchContent());
-  }
   async function handleChangeChapter(chapter) {
     setChapter(chapter);
     setPlaying(true);
-    let link = links[chapter];
-    console.log(links, link, chapter);
-    if (link) {
-      dispatch(fetchContent(link.url));
-    }
+    // let link = links[chapter];
+    // console.log(links, link, chapter);
+    // if (link) {
+    //   dispatch(fetchContent(link.url));
+    // }
   }
   function speechText(text = "", speech = 1) {
     return axios

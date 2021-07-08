@@ -19,13 +19,22 @@ module.exports= {
         return value
     },
     async category(){
-        let $, value=[];
+        let $, value=[], index={};
         $= await fetchHtml('https://truyenfull.vn/')
+        $('#hot-select option').map((i,el)=>{
+            const x=$(el)
+            const title= x.text().trim()
+            const value= x.attr('value')
+            index[title]=value
+        })
         $('.dropdown-menu.multi-column  ul')
         .find('a').map((i, el)=>{
+            const title= $(el).text().trim()
+            const url= $(el).attr('href')
             value.push({
-                url: $(el).attr('href'),
-                title:$(el).text()
+                url,
+                title,
+                index: index[title],
             })
         })
         return value

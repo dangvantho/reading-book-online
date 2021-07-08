@@ -16,6 +16,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.panel-body{
+  font-size: 13px;
+  padding: 5px;
+}
+.panel-body ul{
+  text-align: left;
+}
+.panel-body ul li{
+  margin-left: 35px;
+}
 @keyframes modal{
   0%{
     transform: translateX(100%);

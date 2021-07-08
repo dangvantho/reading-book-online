@@ -26,7 +26,7 @@ function Wrapper(props) {
   const classes = useStyle();
   return (
     <Box style={{ background: bgcolor }} className={classes.root}>
-      <Box className={classes.container}>
+      <Box className={classes.container} minHeight={body ? 450: 10}>
         {body && (
           <Box ml='8px'  mt={3} mb={2} >
             <Box bgcolor="#fff" width="100%" height="30px"/>

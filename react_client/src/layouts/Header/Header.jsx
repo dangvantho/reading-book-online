@@ -118,6 +118,6 @@ function Header(props) {
   );
 }
 const mapSateToProps = (state) => ({
-  category: state.category,
+  category: state.category.data,
 });
 export default connect(mapSateToProps, null)(Header);

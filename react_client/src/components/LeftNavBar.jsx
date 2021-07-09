@@ -83,7 +83,7 @@ const useStyle = makeStyles((theme) => ({
 function LeftNavBar(props) {
   const classes = useStyle();
   const dispatch = useDispatch();
-  const { hotStories, title } = props;
+  const { hotStories, title, cat } = props;
   const { type, data } = hotStories;
   const [loading, setLoading] = useState(false);
   function getLink(link){
@@ -113,7 +113,7 @@ function LeftNavBar(props) {
       setLoading(false);
       clearTimeout(timeout);
     }, 4000);
-    await dispatch(fetchHotStory(type));
+    await dispatch(fetchHotStory({type, cat}));
     if (timeout) {
       console.log("time out ....");
       clearTimeout(timeout);
@@ -121,10 +121,13 @@ function LeftNavBar(props) {
     }
   }
   useEffect(() => {
-    if ((type !== "day" && type) || data.length === 0) {
-      dispatch(fetchHotStory());
+    if (type || data.length === 0) {
+      dispatch(fetchHotStory({type, cat}));
     }
   }, []);
+  useEffect(()=>{
+    dispatch(fetchHotStory({cat}))
+  },[cat])
   return (
     <div className={classes.root}>
       <div className={classes.title}>

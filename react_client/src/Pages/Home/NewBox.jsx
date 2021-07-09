@@ -141,7 +141,6 @@ function NewBox(props) {
               <Hidden xsDown>
                 <Grid
                   item
-                  xs={0}
                   sm={5}
                   md={3}
                   className={classes.genre}
@@ -174,7 +173,6 @@ function NewBox(props) {
               <Hidden smDown>
                 <Grid
                   item
-                  xs={0}
                   md={2}
                   style={{ borderLeft: "1px dashed #ccc" }}
                 >
@@ -185,12 +183,12 @@ function NewBox(props) {
           ))}
         </Grid>
         <Hidden smDown>
-          <Grid item xs={0} md={3}>
+          <Grid item md={3}>
             <Box className={classes.navbar}>
               <div className={classes.title}></div>
               <Grid container>
                 {categories.map((value) => (
-                  <Grid item xs={6}>
+                  <Grid item xs={6} key={value.title}>
                     <Link
                       to={`/the-loai/${getUrl(value.url)}`}
                       className={classes.navLink}
@@ -209,6 +207,6 @@ function NewBox(props) {
 }
 const mapSateToProps = (state) => ({
   books: state.listBook.newBook,
-  categories: state.category,
+  categories: state.category.data,
 });
 export default connect(mapSateToProps, null)(NewBox);

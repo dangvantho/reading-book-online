@@ -9,6 +9,7 @@ module.exports = {
       let desc = $(".desc-text").text();
       let info = $(".info");
       const img= $('.books img')
+      const title= $('.col-info-desc .title').text()
       let genre = [];
       info.find('a[itemprop="genre"]').map((i, el) => {
         let x = $(el);
@@ -30,6 +31,7 @@ module.exports = {
           status: info.find("span.text-primary").text(),
           img: img.attr('src')
         },
+        title,
       };
     } catch (error) {
       throw new Error(error);

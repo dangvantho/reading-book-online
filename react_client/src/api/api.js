@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL='http://localhost:3001/api'
+const baseURL='https://reading-book-truyen-full.herokuapp.com/api'
 //'http://localhost:3001/api'
 //http://192.168.1.5:3001/api
 //https://reading-book-truyen-full.herokuapp.com/api
@@ -29,7 +29,7 @@ instance.interceptors.response.use(
     }
   },
   (err) => {
-    throw new Error(err);
+    throw new Error('err');
   }
 );
 export default instance;

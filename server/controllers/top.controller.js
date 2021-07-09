@@ -3,9 +3,9 @@ const topStory = require("../api/topStory");
 module.exports = new (class {
   async index(req, res) {
     try {
-      const { type } = req.query;
-      const data =await topStory.getTopStory(type || "day");
-      console.log(data)
+      const { type, cat } = req.query;
+      const data =await topStory.getTopStory(type || "day", cat);
+      // console.log(data)
       res.json({
         data,
       });

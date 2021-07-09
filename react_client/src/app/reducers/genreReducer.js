@@ -8,6 +8,7 @@ export const fetchGenreBooks= createAsyncThunk('genre/fetchGenreBooks', async({ 
             page
         }
     })
+    console.log(res.data, res)
     return res.data
 })
 
@@ -16,10 +17,23 @@ const genreSlice= createSlice({
     initialState: {
         title: null,
         desc: null,
+        maxPage: null,
         data: [],
+        loading: false,
+        err: null,
     },
     extraReducers:{
-        [fetchGenreBooks.fulfilled]: (state, action)=>action.payload
+        [fetchGenreBooks.pending]: state=>{
+            state.loading= true
+            state.err= null
+        },
+        [fetchGenreBooks.fulfilled]: (state, action)=>{
+            return { ...state, ...action.payload, loading: false}
+        },
+        [fetchGenreBooks.rejected]: (state, action)=>{
+            state.loading= false
+            state.err= action.payload
+        }
     },
 })
 

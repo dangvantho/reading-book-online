@@ -7,7 +7,7 @@ class bookController{
         const { desc, info} = title
         res.json({
             data: {
-                desc, info, maxPage, links
+                desc, info, maxPage, links, title: title.title
             }
         })
     }

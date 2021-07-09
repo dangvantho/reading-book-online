@@ -12,20 +12,26 @@ export const fetchCategory= createAsyncThunk('category', async ()=>{
 
 const categorySlice= createSlice({
     name:'category',
-    initialState: [],
+    initialState: {
+        loading: false,
+        data: [],
+        err: null
+    },
     extraReducers:{
         [fetchCategory.pending]: (state, action)=>{
-            console.log(state, action)
+            state.loading= true
         },
         [fetchCategory.fulfilled]: (state, action) => {
-            return action.payload.map(value=>{
+            state.data= action.payload.map(value=>{
                 const url= value.url.split('/')
                 value.href= url[url.length-2]
                 return value
             })
+            state.loading= false
         },
         [fetchCategory.rejected]: (state, action)=>{
-            console.log(action)
+            state.loading= false
+            state.err= action.payload
         }
     },
 })

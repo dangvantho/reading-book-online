@@ -109,6 +109,6 @@ function HotBook(props) {
 }
 const mapSateToProps = (state) => ({
   books: state.listBook.hot,
-  categories: state.category,
+  categories: state.category.data,
 });
 export default connect(mapSateToProps, null)(HotBook);

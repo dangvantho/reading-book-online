@@ -31,22 +31,50 @@ const bookSLice= createSlice({
             author: {},
             img: null,
             genre: [],
-
+            title: null,
         },
         links:[],
+        loading: false,
+        err: null
     },
     extraReducers:{
+        [fetchInforOfBook.pending]: state=>{
+            state.loading= true
+            state.err= null
+        },
         [fetchInforOfBook.fulfilled]: (state, action)=>{
-            const {maxPage, links, desc, info } = action.payload
-            return {...state, maxPage, links, desc, info}
+            const {maxPage, links, desc, info, title } = action.payload
+            return {...state, maxPage, links, desc, info, title, loading: false}
+        },
+        [fetchInforOfBook.rejected]: (state, action)=>{
+            state.loading= false
+            state.err= action.payload
+        },
+        [fetchPage.pending]: state=>{
+            state.loading= true
+            state.err= null
         },
         [fetchPage.fulfilled]: (state, action)=>{
             const links= action.payload
             state.links= links
+            state.loading= false
+        },
+        [fetchPage.rejected]: (state, action)=>{
+            state.loading= false
+            state.err= action.payload
+        },
+        [fetchContent.pending]: state=>{
+            state.loading= true
+            state.err= null
         },
         [fetchContent.fulfilled]:(state, action)=>{
+            state.loading= false
             state.content= action.payload.split('.').filter(value=>value!='')
-        }
+        },
+        [fetchContent.rejected]: (state, action)=>{
+            state.loading= false
+            state.err= action.payload
+        },
     },
 })
 

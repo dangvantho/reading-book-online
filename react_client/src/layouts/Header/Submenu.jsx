@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, makeStyles } from "@material-ui/core";
+import { Box, makeStyles, Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import ListIcon from "@material-ui/icons/List";
@@ -128,6 +128,6 @@ function Submenu(props) {
 }
 
 const mapSateToProps = (state) => ({
-  categories: state.category,
+  categories: state.category.data,
 });
 export default connect(mapSateToProps, null)(Submenu);

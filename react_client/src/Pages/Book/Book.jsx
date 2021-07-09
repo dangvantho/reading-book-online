@@ -17,6 +17,13 @@ const useStyle = makeStyles((theme) => ({
     maxWidth: 300,
     maxHeight: 400,
   },
+  h1:{
+    color:'#4e4e4e',
+    fontSize: 24,
+    textAlign:'center',
+    fontWeight: 600,
+    paddingBottom: 12
+  },
   h3: {
     fontSize: 14,
     fontWeight: 500,
@@ -48,10 +55,10 @@ const useStyle = makeStyles((theme) => ({
 
 function Book(props) {
   const classes = useStyle();
-  const { maxPage, links, desc, info, content } = props.book;
+  const { maxPage, links, desc, info, content, title } = props.book;
   const { name } = useParams();
   const dispatch = useDispatch();
-  let title;
+  // let title;
   useEffect(() => {}, []);
   useEffect(() => {
     dispatch(fetchInforOfBook(name));
@@ -63,6 +70,9 @@ function Book(props) {
           <Grid item xs={12} md={8}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={4}>
+                <Hidden smUp>
+                  <h1 className={classes.h1}>{title}</h1>
+                </Hidden>
                 <Box display="flex" justifyContent="center" width="100%">
                   <img
                     className={classes.img}
@@ -118,6 +128,9 @@ function Book(props) {
                 </Box>
               </Grid>
               <Grid item xs={12} sm={8}>
+                <Hidden xsDown>
+                  <h1 className={classes.h1}>{title}</h1>
+                </Hidden>
                 <div className={classes.desc}>{desc}</div>
                 <Reading
                   links={links}

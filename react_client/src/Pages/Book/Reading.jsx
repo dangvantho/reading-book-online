@@ -13,7 +13,6 @@ import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import SpeedIcon from "@material-ui/icons/Speed";
 import Loading_1 from "../../components/Loading_1";
-import axios from "axios";
 
 const useStyle = makeStyles((theme) => ({
   root: {},
@@ -107,7 +106,7 @@ const useStyle = makeStyles((theme) => ({
 
 function Reading(props) {
   const classes = useStyle();
-  const { links, maxPage, name, content } = props;
+  const { links, maxPage, name } = props;
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const audio = useRef();
@@ -118,7 +117,6 @@ function Reading(props) {
   const [loading, setLoading] = useState(false);
   function handleChangePage(e, page) {
     setLoading(true)
-    console.log('page',page, loading)
     setChapter(0);
     setPage(page);
     dispatch(
@@ -150,71 +148,52 @@ function Reading(props) {
     setChapter(chapter - 1);
   }
   function getTitleOfLink() {
-    const link = links.find((value, index) => index == chapter);
+    let link
+    if(links)
+    link= links.find((value, index) => index == chapter);
     return link ? link.title : "";
   }
   async function handleChangeChapter(chapter) {
     setChapter(chapter);
     setPlaying(true);
-    // let link = links[chapter];
-    // console.log(links, link, chapter);
-    // if (link) {
-    //   dispatch(fetchContent(link.url));
-    // }
+    if(chapter===0 && playing===false){
+      let link = links[chapter];
+      setLoading(true);
+      const data=await fetchContent(link.url)
+      setSrc(data)
+    }
   }
-  function speechText(text = "", speech = 1) {
-    return axios
-      .post("https://texttospeechapi.wideo.co/api/wideo-text-to-speech", {
-        data: { text, speech, voice: "vi-VN-Standard-A" },
-      })
-      .then(async (res) => {
-        return res.data.result.url;
-      });
-  }
-  function handlePauseAudio() {
+  async function handlePauseAudio() {
     setPlaying(false);
+    // const data= await fetchContent()
     audio.current.pause();
   }
   async function handleRemuseAudio() {
     setPlaying(true);
-    if (content.length === 0 && links[chapter]) {
+    if (src.length === 0 && links[chapter]) {
       console.log("loading playing", loading);
       setLoading(true);
-      dispatch(fetchContent(links[chapter].url));
+      
       return;
     }
     audio.current.play();
   }
-  async function handleReading(text) {
-    let values = await Promise.allSettled(
-      text.map((value) => speechText(value))
-    );
-    console.log("Loading: ", loading);
-    const result = [];
-    values.forEach((value) => {
-      if (value.status === "fulfilled") {
-        result.push(value.value);
-      }
-    });
-    setSrc(result);
-    setLoading(false);
-  }
   useEffect(() => {
     let link = links[chapter];
+    console.log(link, links, chapter)
     if (link && playing) {
       (async function () {
         setLoading(true);
-        dispatch(fetchContent(link.url));
+        const data=await fetchContent(link.url)
+        setSrc(data)
       })();
     }
   }, [chapter, links]);
   useEffect(() => {
-    if (content.length > 0 && playing) handleReading(content);
-  }, [content]);
-  useEffect(() => {
     if (audio.current.src) {
       audio.current.src = "/";
     }
+    setLoading(false)
     let currentVoice = 0;
     const length = src.length;
     audio.current.src = src[currentVoice];
@@ -303,7 +282,7 @@ function Reading(props) {
             <p
               key={value.title}
               className={classes.linkItem}
-              onClick={() => handleChangeChapter(index, value.url)}
+              onClick={() => handleChangeChapter(index)}
             >
               {value.title}
             </p>

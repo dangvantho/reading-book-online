@@ -35,13 +35,14 @@ function Circular(props) {
                 alignItems='center'
                 justifyContent='center'
                 bgcolor='#fff'
+                zIndex={999}
                >
                    <CircularProgress variant='determinate' value={process} size={60}/>
                    <Box>
                    </Box>
                </Box>
             )}
-            {!loading && props.children}
+            {props.children}
         </React.Fragment>
     );
 }

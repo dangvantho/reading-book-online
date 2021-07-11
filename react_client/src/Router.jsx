@@ -1,19 +1,19 @@
-import React from "react";
+import React, { lazy, Suspense} from "react";
 import { Route, Switch, Link, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import Circular from "./components/Circular";
-// const Home = lazy(() => import("./Pages/Home/Home"));
-// const Genre= lazy(()=>import('./Pages/Genre/Genre'))
-// const Book= lazy(()=>import('./Pages/Book/Book'))
-import Home from "./Pages/Home/Home";
-import Genre from "./Pages/Genre/Genre";
-import Book from "./Pages/Book/Book";
+const Home = lazy(() => import("./Pages/Home/Home"));
+const Genre= lazy(()=>import('./Pages/Genre/Genre'))
+const Book= lazy(()=>import('./Pages/Book/Book'))
+// import Home from "./Pages/Home/Home";
+// import Genre from "./Pages/Genre/Genre";
+// import Book from "./Pages/Book/Book";
 
 Router.propTypes = {};
 
 function Router(props) {
   return (
-    <Circular>
+    <Suspense fallback={<Circular/>}>
       <Switch>
         <Route path={`/the-loai/:category`} exact>
           <Genre />
@@ -28,7 +28,7 @@ function Router(props) {
           <Home />
         </Route>
       </Switch>
-    </Circular>
+    </Suspense>
   );
 }
 

@@ -5,7 +5,7 @@ class genreController{
     try {
         const { genre, page }= req.query
         const data= await Genre.getListBook( genre, page)
-        console.log(page)
+        // console.log(page)
         res.json({ data })
     } catch (error) {
       console.log(error)
@@ -16,7 +16,7 @@ class genreController{
       try {
         const { type, cat} = req.query
           const data= await Genre.getTopStory(type || 'day', cat)
-          console.log(data)
+          // console.log(data)
           res.json({ data })
       } catch (error) {
           console.log(error)

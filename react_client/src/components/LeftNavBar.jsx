@@ -157,7 +157,7 @@ function LeftNavBar(props) {
       </Box>
       <Box>
             {data.map(value=>(
-                <Box display='flex' mt='8px' borderBottom='1px dashed #ccc' pb='8px' ml={3}>
+                <Box display='flex' mt='8px' borderBottom='1px dashed #ccc' pb='8px' ml={3} key={value.book.title}>
                     <Box  className={classes.avatar}>
                         <Avatar 
                         className={classes.topNumber}
@@ -169,7 +169,6 @@ function LeftNavBar(props) {
                     <Box>
                         <Link 
                         className={`${classes.link} ${classes.linkTitle}`} 
-                        key={value.title} 
                         to={`/doc-truyen/${getLink(value.book.url)}`}
                         title={value.book.title}
                         >

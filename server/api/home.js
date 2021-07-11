@@ -69,7 +69,7 @@ module.exports= {
             })
             let chapter= x.find('.text-info a')
             let updateAt= x.find('.col-time')
-            console.log(link.attr('href'), link.text(),genre,  chapter.text(), updateAt.text())
+            // console.log(link.attr('href'), link.text(),genre,  chapter.text(), updateAt.text())
             value.push({
                 url: link.attr('href'),
                 title: link.text(),

@@ -7,6 +7,7 @@ import Wrapper from "../../layouts/Wrapper";
 import Reading from "./Reading";
 import bg from "../../assets/bg.jpg";
 import LeftNavBar from "../../components/LeftNavBar";
+import Circular from "../../components/Circular";
 
 const useStyle = makeStyles((theme) => ({
   root: {},
@@ -17,12 +18,12 @@ const useStyle = makeStyles((theme) => ({
     maxWidth: 300,
     maxHeight: 400,
   },
-  h1:{
-    color:'#4e4e4e',
+  h1: {
+    color: "#4e4e4e",
     fontSize: 24,
-    textAlign:'center',
+    textAlign: "center",
     fontWeight: 600,
-    paddingBottom: 12
+    paddingBottom: 12,
   },
   h3: {
     fontSize: 14,
@@ -55,10 +56,18 @@ const useStyle = makeStyles((theme) => ({
 
 function Book(props) {
   const classes = useStyle();
-  const { maxPage, links, desc, info, content, title } = props.book;
+  const { maxPage, links, desc, info, content, title, loading } = props.book;
   const { name } = useParams();
   const dispatch = useDispatch();
-  // let title;
+  function getLinks(url) {
+    try {
+      const split = url.split('/')
+      const len = split.length;
+      return split[len - 2];
+    } catch (error) {
+      return url
+    }
+  }
   useEffect(() => {}, []);
   useEffect(() => {
     dispatch(fetchInforOfBook(name));
@@ -100,7 +109,7 @@ function Book(props) {
                     {info.genre.map((value) => (
                       <Link
                         className={classes.infoLink}
-                        to={`/the-loai/${value.url}`}
+                        to={`/the-loai/${getLinks(value.url)}`}
                         key={value.title}
                       >
                         {value.title} ,
@@ -143,11 +152,14 @@ function Book(props) {
           </Grid>
           <Hidden smDown>
             <Grid item xs={4}>
-              <LeftNavBar title={'Truyện đang hot'} />
+              <LeftNavBar title={"Truyện đang hot"} />
             </Grid>
           </Hidden>
         </Grid>
       </Box>
+      {loading && (
+        <Circular/>
+      )}
     </Wrapper>
   );
 }

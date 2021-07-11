@@ -19,13 +19,35 @@ const listBookReducer= createSlice({
     initialState:{
         hot:[],
         newBook:[],
+        loading: false,
+        err: null
     },
     extraReducers:{
+        [fetchHotBooks.pending]: state=>{
+            state.loading= true
+            state.err= null
+        },
         [fetchHotBooks.fulfilled]: (state,action)=>{
             state.hot= action.payload
+            state.loading= false
+            state.err= null
+        },
+        [fetchHotBooks.rejected]: state=>{
+            state.loading= false
+            state.err= "Lỗi tải danh sách truyện đang hot"
+        },
+        [fetchNewBooks.pending]: state=>{
+            state.loading= true
+            state.err= null
         },
         [fetchNewBooks.fulfilled]: (state, action)=>{
             state.newBook= action.payload
+            state.loading= false
+            state.err= null
+        },
+        [fetchNewBooks.rejected]: state=>{
+            state.loading= false
+            state.err= 'Lỗi tải danh sách truyện mới cập nhật'
         }
     }
 })

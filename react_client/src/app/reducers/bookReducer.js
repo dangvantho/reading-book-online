@@ -11,16 +11,16 @@ export const fetchPage= createAsyncThunk('book/fetchPage', async ({link, page})=
         params: { page }
     })
     console.log(link, page, res.data)
-    return res.data
+    return res.data.data
 })
-export const fetchContent= createAsyncThunk('book/fetchContent', async url=>{
+export const fetchContent= async url=>{
     const link= url.split('/')
     const length= link.length
     console.log(link[length-3], link[length-2], console.log(url))
     const res= await axios.get(`/book/content-chapter/${link[length-3]}/${link[length-2]}`)
     console.log(res)
     return res.data
-})
+}
 const bookSLice= createSlice({
     name:'book',
     initialState:{
@@ -60,18 +60,6 @@ const bookSLice= createSlice({
             state.loading= false
         },
         [fetchPage.rejected]: (state, action)=>{
-            state.loading= false
-            state.err= action.payload
-        },
-        [fetchContent.pending]: state=>{
-            state.loading= true
-            state.err= null
-        },
-        [fetchContent.fulfilled]:(state, action)=>{
-            state.loading= false
-            state.content= action.payload.split('.').filter(value=>value!='')
-        },
-        [fetchContent.rejected]: (state, action)=>{
             state.loading= false
             state.err= action.payload
         },

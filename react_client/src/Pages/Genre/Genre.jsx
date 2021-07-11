@@ -11,6 +11,9 @@ import bg from "../../assets/bg.jpg";
 import { fetchGenreBooks } from "../../app/reducers/genreReducer";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import CreateIcon from "@material-ui/icons/Create";
+import images from '../../assets/images.png'
+import ImageLoading from "../../components/ImageLoading";
+import ContentLoading from "../../components/ContentLoading";
 // import { fetchHotStory } from "../../app/reducers/hotStoryReducer";
 
 const useStyle = makeStyles(function (theme) {
@@ -128,6 +131,19 @@ const useStyle = makeStyles(function (theme) {
         textDecoration: "underline",
       },
     },
+    rowLoading:{
+      background:'#fff',
+      margin: 0,
+      padding: 6,
+    },
+    imgBoxLoading:{
+      maxHeight: 54,
+      overflow:'hidden',
+      marginBottom: 8,
+      display:'flex',
+      justifyContent:'center',
+    },
+
   };
 });
 
@@ -185,7 +201,7 @@ function Genre(props) {
             <div className={classes.titleGenre}>
               <h2>{genre.title}</h2>
             </div>
-            {genre.data.map((item) => (
+            {!genre.loading ?genre.data.map((item) => (
               <Grid
                 container
                 className={classes.row}
@@ -238,7 +254,18 @@ function Genre(props) {
                   </Link>
                 </Grid>
               </Grid>
-            ))}
+            )) : 
+            new Array(16).fill(0).map((value, index)=>(
+              <Grid container key={index} className={`${classes.row} ${classes.rowLoading}`}>
+                <Grid item xs={3} className={classes.imgBoxLoading}>
+                  <ImageLoading/>
+                </Grid>
+                <Grid item xs={9} >
+                  <ContentLoading/>
+                </Grid>
+              </Grid>
+            ))
+            }
             {genre.maxPage && genre.maxPage >= 2 && (
               <Box mt={3}>
                 <Pagination

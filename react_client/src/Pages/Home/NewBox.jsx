@@ -76,11 +76,44 @@ const useStyle = makeStyles((theme) => ({
       textDecoration: "underline",
     },
   },
+  loading:{
+    padding: '8px 0',
+  },
+  span:{
+    display: 'inline-block',
+    position:'relative',
+    width: '50%',
+    maxWidth: 160,
+    height: 10,
+    left: 20,
+    background:'#eaeaea',
+    borderRadius: 5,
+    marginBottom: 6,
+    overflow:'hidden',
+    "&::after":{
+      content:'""',
+      position:'absolute',
+      left: 0,
+      width:'50%',
+      height: 10,
+      background:'#e4e4df',
+      borderRadius: 5,
+      animation:'$effect 0.8s ease-in infinite',
+    },
+  },
+  "@keyframes effect":{
+    '0%':{
+      left: 0,
+    },
+    '100%':{
+      left: '100%',
+    }
+  }
 }));
 
 function NewBox(props) {
   const classes = useStyle();
-  const { categories, books } = props;
+  const { categories, books, loading } = props;
   const dispatch = useDispatch();
   function handleChangeSelect(e) {
     const value = e.target.value;
@@ -122,7 +155,7 @@ function NewBox(props) {
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} md={9} style={{ borderTop: "1px dashed #ccc" }}>
-          {books.map((value) => (
+          {!loading ? books.map((value) => (
             <Grid
               key={value.title}
               container
@@ -180,7 +213,16 @@ function NewBox(props) {
                 </Grid>
               </Hidden>
             </Grid>
-          ))}
+          )) : 
+           new Array(16).fill(0).map((value,index)=>(
+             <Box className={classes.row} key={index} style={{paddingBottom: 0,}} >
+               <Box  display='flex' flexDirection='column'>
+                 <span className={classes.span}></span>
+                 <span className={classes.span}></span>
+               </Box>
+             </Box> 
+           ))
+          }
         </Grid>
         <Hidden smDown>
           <Grid item md={3}>
@@ -208,5 +250,6 @@ function NewBox(props) {
 const mapSateToProps = (state) => ({
   books: state.listBook.newBook,
   categories: state.category.data,
+  loading: state.listBook.loading,
 });
 export default connect(mapSateToProps, null)(NewBox);
